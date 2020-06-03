@@ -1,0 +1,29 @@
+{:source-paths
+ ["src"]
+
+ :dependencies [[reagent "1.0.0-alpha2"]
+                [binaryage/dirac "1.5.12"]
+                [org.clojure/clojure "1.10.1"]
+                [devcards "0.2.7"]
+                [cljs-http "0.1.46"]
+                [org.clojure/core.async "1.2.603"]
+                [cider/cider-nrepl "0.25.0"]]
+
+
+ :dev-http {8080 "target/"
+            8081 "devcards/"}
+ :builds {:app {:output-dir "target/"
+                :asset-path "."
+                :target :browser
+                :modules {:main {:init-fn main.app/init}}
+                :devtools {:after-load main.app/reload!
+                           :preloads [devtools.preload]}}
+          :devcards {:output-dir "devcards/"
+                     :js-options {:resolve {"devcards-marked" {:target :npm :require "marked"}
+                                            "devcards-syntax-highlighter" {:target :npm :require "syntax-highlighter"}}}
+                     :asset-path "."
+                     :devcards true
+                     :target :browser
+                     :modules {:main {:init-fn devcards.main/init}}
+                     :devtools {:after-load devcards.main/reload!
+                                :preloads [devtools.preload]}}}}
